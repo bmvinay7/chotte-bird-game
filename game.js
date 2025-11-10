@@ -63,10 +63,23 @@ backgroundImage.src = 'shed.png';
 // Sound effects
 const backgroundMusic = new Audio('dbackground.mp3');
 const collisionSound = new Audio('middle.mp3');
-const endingSound = new Audio('ending.mp3');
+const victoryMusic = new Audio('victory_music.mp3');
+
+// Preload audio files
+backgroundMusic.preload = 'auto';
+collisionSound.preload = 'auto';
+victoryMusic.preload = 'auto';
 
 // Loop background music during gameplay
 backgroundMusic.loop = true;
+
+// Load collision image with cache-busting
+const collisionImage = new Image();
+collisionImage.src = 'Collision Image.png?v=' + Date.now() + Math.random();
+
+// Load victory image with cache-busting
+const victoryImage = new Image();
+victoryImage.src = 'victory.png?v=' + Date.now() + Math.random();
 
 // Event Listeners
 function flap() {
@@ -159,8 +172,8 @@ function update() {
             pipe.passed = true;
             score++;
             
-            // Check for win condition at 20 pipes
-            if (score >= 20) {
+            // Check for win condition at 5 pipes (testing)
+            if (score >= 5) {
                 winGame();
                 return;
             }
@@ -237,11 +250,15 @@ function winGame() {
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
     
-    // Play ending.mp3 for victory
+    // Play victory_music.mp3 for victory
     setTimeout(() => {
-        endingSound.currentTime = 0;
-        endingSound.play().catch(err => console.log('Audio play failed:', err));
+        victoryMusic.currentTime = 0;
+        victoryMusic.play().catch(err => console.log('Audio play failed:', err));
     }, 100);
+    
+    // Set the victory image
+    const winImage = document.getElementById('winImage');
+    winImage.src = victoryImage.src;
     
     document.getElementById('winScreen').classList.add('show');
 }
@@ -251,19 +268,33 @@ function endGame() {
     gameRunning = false;
     gameOver = true;
     
-    // Stop background music
+    // Stop background music first and wait a bit
     backgroundMusic.pause();
-    backgroundMusic.currentTime = 0;
-    
-    // Play middle.mp3 on collision
-    setTimeout(() => {
-        collisionSound.currentTime = 0;
-        collisionSound.play().catch(err => console.log('Audio play failed:', err));
-    }, 100);
     
     // Update end screen with score
     const endScreen = document.getElementById('endScreen');
     const endImage = document.getElementById('endImage');
+    
+    // Set the collision image with cache-busting
+    endImage.src = collisionImage.src;
+    
+    // Play middle.mp3 on collision - with better error handling
+    const playCollisionSound = () => {
+        collisionSound.currentTime = 0;
+        const playPromise = collisionSound.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(err => {
+                console.log('Audio play failed, retrying...', err);
+                setTimeout(() => {
+                    collisionSound.play().catch(e => console.log('Retry failed:', e));
+                }, 100);
+            });
+        }
+    };
+    
+    // Small delay to ensure background music stops first
+    setTimeout(playCollisionSound, 50);
     
     // Remove existing score display if any
     const existingScore = document.getElementById('endScore');

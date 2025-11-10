@@ -120,18 +120,20 @@
             display: flex;
         }
 
-        #endImage {
+        #endImage, #winImage {
             width: 700px;
             max-width: 80vw;
+            max-height: 50vh;
             height: auto;
             border-radius: 20px;
-            object-fit: cover;
-            margin-bottom: 2rem;
+            object-fit: contain;
+            margin-bottom: 1rem;
         }
 
         @media (max-width: 768px) {
-            #endImage {
+            #endImage, #winImage {
                 width: 90vw;
+                max-height: 45vh;
             }
         }
 
@@ -164,14 +166,14 @@
         </div>
         
         <div id="endScreen">
-            <img id="endImage" src="Collision Image.png" alt="End Image">
+            <img id="endImage" src="" alt="End Image">
             <button class="restart-btn" onclick="restartGame()">Tap to Restart</button>
         </div>
         
         <div id="winScreen">
-            <h1 style="font-size: 3rem; margin-bottom: 2rem; color: #4CAF50;">🎉 Victory! 🎉</h1>
+            <img id="winImage" src="" alt="Victory Image">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem; color: #4CAF50;">🎉 Victory! 🎉</h1>
             <p style="font-size: 2rem; margin-bottom: 2rem;">You reached your loved one!</p>
-            <p style="font-size: 1.5rem; margin-bottom: 2rem;">Raand level - 20</p>
             <button class="restart-btn" onclick="restartGame()">Play Again</button>
         </div>
     </div>
