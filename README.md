@@ -1,4 +1,4 @@
-# Flying Raaand Game 🎮
+# Malli Flying Game 🎮
 
 A fun Flappy Bird-style game built with HTML5 Canvas and JavaScript.
 
@@ -26,7 +26,7 @@ A fun Flappy Bird-style game built with HTML5 Canvas and JavaScript.
 
 ## Deploy to Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/YOUR_REPO_NAME)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/bmvinay7/Malli-flying-game)
 
 Or manually:
 ```bash
