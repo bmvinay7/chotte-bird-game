@@ -172,8 +172,8 @@ function update() {
             pipe.passed = true;
             score++;
             
-            // Check for win condition at 24 pipes
-            if (score >= 24) {
+            // Check for win condition at 23 pipes
+            if (score >= 23) {
                 winGame();
                 return;
             }
@@ -329,12 +329,30 @@ function draw() {
         ctx.drawImage(pipeImage, pipe.x, pipe.gapY + GAP_HEIGHT, PIPE_WIDTH, canvas.height - (pipe.gapY + GAP_HEIGHT));
     }
     
-    // Bird
+    // Bird with rounded corners
     ctx.save();
     ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
     ctx.rotate(player.rotation);
     if (player.loaded) {
-        ctx.drawImage(player.image, -player.width / 2, -player.height / 2, player.width, player.height);
+        // Create rounded rectangle clipping path
+        const cornerRadius = 30; // Adjust this value for more/less rounding
+        const x = -player.width / 2;
+        const y = -player.height / 2;
+        
+        ctx.beginPath();
+        ctx.moveTo(x + cornerRadius, y);
+        ctx.lineTo(x + player.width - cornerRadius, y);
+        ctx.quadraticCurveTo(x + player.width, y, x + player.width, y + cornerRadius);
+        ctx.lineTo(x + player.width, y + player.height - cornerRadius);
+        ctx.quadraticCurveTo(x + player.width, y + player.height, x + player.width - cornerRadius, y + player.height);
+        ctx.lineTo(x + cornerRadius, y + player.height);
+        ctx.quadraticCurveTo(x, y + player.height, x, y + player.height - cornerRadius);
+        ctx.lineTo(x, y + cornerRadius);
+        ctx.quadraticCurveTo(x, y, x + cornerRadius, y);
+        ctx.closePath();
+        ctx.clip();
+        
+        ctx.drawImage(player.image, x, y, player.width, player.height);
     }
     ctx.restore();
     
