@@ -307,7 +307,7 @@ function endGame() {
     scoreDisplay.style.fontWeight = 'bold';
     scoreDisplay.style.marginBottom = '2rem';
     scoreDisplay.style.color = '#fff';
-    scoreDisplay.textContent = 'Raand level - ' + score;
+    scoreDisplay.textContent = 'Chotte level - ' + score;
     
     endImage.insertAdjacentElement('afterend', scoreDisplay);
     endScreen.classList.add('show');
@@ -358,14 +358,14 @@ function draw() {
     
     // Debug: Show elliptical collision hitbox (transparent - no visible outline)
     
-    // Raand level (displayed at top left during gameplay)
+    // Chotte level (displayed at top left during gameplay)
     ctx.fillStyle = '#fff';
     ctx.font = 'bold 32px Arial';
     ctx.strokeStyle = '#000';
     ctx.lineWidth = 3;
     ctx.textAlign = 'left';
-    ctx.strokeText('Raand level: ' + score, 20, 50);
-    ctx.fillText('Raand level: ' + score, 20, 50);
+    ctx.strokeText('Chotte level: ' + score, 20, 50);
+    ctx.fillText('Chotte level: ' + score, 20, 50);
 }
 
 function gameLoop() {
